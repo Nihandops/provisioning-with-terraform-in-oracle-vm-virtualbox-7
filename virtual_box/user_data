@@ -1,0 +1,33 @@
+#cloud-config
+users:
+  - name: nihan
+    passwd: nihan
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+  
+
+# Set password to 'ubuntu' (encrypted)
+chpasswd:
+  list: |
+    ubuntu:ubuntu
+  expire: false
+
+# Enable password authentication
+ssh_pwauth: true
+
+# Update system on first boot
+package_update: true
+package_upgrade: true
+
+# Install basic packages
+packages:
+  - curl
+  - wget
+  - vim
+  - net-tools
+
+# Run initial setup commands
+runcmd:
+  - echo "Hello from Terraform-provisioned VM!" > /home/ubuntu/welcome.txt
+  - chown ubuntu:ubuntu /home/ubuntu/welcome.txt
